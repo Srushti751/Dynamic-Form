@@ -1,0 +1,9 @@
+.bg-container{
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 110vh;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* z-index: 0; */
+}

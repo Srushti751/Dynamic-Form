@@ -3,48 +3,62 @@ import { BsFillPeopleFill } from 'react-icons/bs'
 import { FaWpforms } from 'react-icons/fa'
 import FormDetail from './FormDetail'
 
+
 function FormInput({ fieldArray }) {
     const [valueInp, setValueInp] = useState("")
+    const [send, setSend] = useState(false)
+    const [lsForm, setLsform] = useState([])
     // let itemsEls = useRef([]);
 
 
-    const setInp = (e, value, f) => {
-        e.preventDefault()
+    const setInp = (value, f) => {
+        // e.preventDefault()
         console.log("f", f)
         f.inp = value
     }
 
     const sendForm = async (e) => {
         e.preventDefault()
-        console.log('form', fieldArray)
+        setSend(true)
+        if(localStorage.getItem("details")){
+            const data = JSON.parse(localStorage.getItem("details"))
+            setLsform([data,{"form":fieldArray}])
+            localStorage.setItem("details",JSON.stringify([data,{"form":fieldArray}]))
+        }
+        // console.log('form', fieldArray)
 
     }
 
 
     return (
         <>
-            {fieldArray && fieldArray.map((f, i) => {
-                // const getRef =  (itemsEls.current.push(i))
+            <div className={`${fieldArray.length > 0 ? 'container border p-3' : ''}`}>
+            {console.log('form', lsForm && lsForm)}
 
-                return (
-                    <div className="mb-3" key={i} >
-                        <div className='d-flex '>
-                            <label className="form-label">{f.title}</label>
-                            <span className=' m-2'>{f.icon}</span>
+                {fieldArray && fieldArray.map((f, i) => {
+                    // const getRef =  (itemsEls.current.push(i))
+                    return (
+                        <div className="mb-3" key={i} >
+                            <div className='d-flex '>
+                                <span className=' m-1'>{f.icon}</span>
+                                <label className="form-label">{f.title}</label>
+                            </div>
+
+                            <input type="text" className="form-control"
+                                onChange={(e) => { setInp(e.target.value, f) }}
+                            // onChange={(e) => { setValueInp(e.target.value) }}
+                            />
+                            {/* <button onClick={(e) => setInp(e, valueInp, f)}>ok</button> */}
+                            {i == fieldArray.length - 1 && <button className='btn btn-primary mt-3' onClick={(e) => sendForm(e)}>Send Form</button>}
                         </div>
+                    )
 
-                        <input type="text" className="form-control"
-                            onChange={(e) => { setValueInp(e.target.value) }}
-                        />
-                        <button onClick={(e) => setInp(e, valueInp, f)}>ok</button>
-                        <button onClick={(e) => sendForm(e)}>Send Form</button>
-                    </div>
-                )
+                }
+                )}
+            </div>
 
-            }
-            )}
-
-            <FormDetail form={fieldArray}/>
+            {send &&
+                 <FormDetail form={fieldArray} />}
 
         </>
     )

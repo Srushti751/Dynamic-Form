@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import "./Template.css"
 import FormInput from './FormInput'
-import { BsFillPeopleFill } from 'react-icons/bs'
+import { BsFillPersonFill } from 'react-icons/bs'
 import { FaWpforms } from 'react-icons/fa'
+import { AiFillMail } from 'react-icons/ai'
 
 function Template() {
     const [fieldArray, setFieldArray] = useState([])
@@ -12,36 +13,38 @@ function Template() {
 
     const addField = (e) => {
         e.preventDefault()
-        fieldArray.push({ "title": title, "icon":iconFunc })
+        fieldArray.push({ "title": title, "icon": iconFunc,"iconName":iconFunc.type.name})
         setFieldArray([...fieldArray])
         setTitle("")
     }
-    console.log("icon",icon)
+    console.log("icon", icon)
 
-    const chooseIcon = ()=>{
+    const chooseIcon = () => {
 
-        switch(icon){
-            case "BsFillPeopleFill": setIconFunc(<BsFillPeopleFill/>)
-            break;
-            case "FaWpforms" : setIconFunc(<FaWpforms/>)
-            break;
-            default : return
-    
+        switch (icon) {
+            case "BsFillPersonFill": setIconFunc(<BsFillPersonFill />)
+                break;
+            case "FaWpforms": setIconFunc(<FaWpforms />)
+                break;
+            case "AiFillMail": setIconFunc(<AiFillMail />)
+                break;
+            default: return
+
         }
     }
 
     useEffect(() => {
-      chooseIcon()
+        chooseIcon()
     }, [icon])
-    
+
 
     return (
         <div className='container'>
-            {console.log("iconFunc",iconFunc)}
+            {console.log("iconFunc", iconFunc)}
             <div className='row'>
                 {console.log("fieldArray", fieldArray)}
                 <div className='col-6'>
-                    <FormInput fieldArray={fieldArray}  />
+                    <FormInput fieldArray={fieldArray} />
                 </div>
                 <div className='col-6'>
                     <form onSubmit={addField}>
@@ -50,10 +53,11 @@ function Template() {
                             <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div className="mb-3">
-                            <select onChange={(e)=>setIcon(e.target.value)} defaultValue={"BsFillPeopleFill"}>
-                                <option  >Select</option>
-                                <option  value={"BsFillPeopleFill"}>People</option>
+                            <select onChange={(e) => setIcon(e.target.value)} >
+                                <option  >Select Icon</option>
+                                <option value={"BsFillPersonFill"}>Name</option>
                                 <option value={"FaWpforms"}>Forms</option>
+                                <option value={"AiFillMail"}>Email</option>
                             </select>
                         </div>
 

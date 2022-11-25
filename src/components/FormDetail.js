@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 function FormDetail({form}) {
+    // const [form, setform] = useState([])
+
+    // useEffect(() => {
+     
+    //     if(localStorage.getItem("details")){
+    
+    //         const details = JSON.parse(localStorage.getItem("details"))
+    //         setform(details)
+    //         console.log("details",details)
+    //     }
+    // }, [])
+    
     return (
-        <table class="table">
+        <table class="table mt-5 border">
+            {console.log(form && form)}
             <thead>
                 <tr>
                     <th scope="col">Sr No.</th>

@@ -23,7 +23,10 @@ function FormInput({ fieldArray }) {
         if(localStorage.getItem("details")){
             const data = JSON.parse(localStorage.getItem("details"))
             setLsform([data,{"form":fieldArray}])
-            localStorage.setItem("details",JSON.stringify([data,{"form":fieldArray}]))
+            localStorage.setItem("details",JSON.stringify([...data,{"form":fieldArray}]))
+        }
+        else{
+            localStorage.setItem("details",JSON.stringify([{"form":fieldArray}]))
         }
         // console.log('form', fieldArray)
 

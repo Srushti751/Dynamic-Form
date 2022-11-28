@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./Template.css"
 import FormInput from './FormInput'
-import { BsFillPersonFill } from 'react-icons/bs'
+import { BsFillPersonFill, BsFillTelephoneFill } from 'react-icons/bs'
 import { FaWpforms } from 'react-icons/fa'
 import { AiFillMail } from 'react-icons/ai'
 
@@ -13,7 +13,7 @@ function Template() {
 
     const addField = (e) => {
         e.preventDefault()
-        fieldArray.push({ "title": title, "icon": iconFunc,"iconName":iconFunc.type.name})
+        fieldArray.push({ "title": title, "icon": iconFunc, "iconName": iconFunc.type.name })
         setFieldArray([...fieldArray])
         setTitle("")
     }
@@ -28,6 +28,8 @@ function Template() {
                 break;
             case "AiFillMail": setIconFunc(<AiFillMail />)
                 break;
+            case "BsFillTelephoneFill": setIconFunc(<BsFillTelephoneFill />)
+                break;
             default: return
 
         }
@@ -37,6 +39,11 @@ function Template() {
         chooseIcon()
     }, [icon])
 
+    const loginOnKeypress = (e) => {
+        if (e.key == "Enter") {
+          addField(e);
+        }
+      };
 
     return (
         <div className='container'>
@@ -50,19 +57,25 @@ function Template() {
                     <form onSubmit={addField}>
                         <div className="mb-3">
                             <label className="form-label">Title</label>
-                            <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            <input type="text" className="form-control" placeholder='Field Title' value={title}
+                                onKeyDown={(e) => loginOnKeypress(e)}
+                                onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div className="mb-3">
-                            <select onChange={(e) => setIcon(e.target.value)} >
+                            <select className='form-control' onChange={(e) => setIcon(e.target.value)}
+                                onKeyDown={(e) => loginOnKeypress(e)}
+
+                            >
                                 <option  >Select Icon</option>
                                 <option value={"BsFillPersonFill"}>Name</option>
                                 <option value={"FaWpforms"}>Forms</option>
                                 <option value={"AiFillMail"}>Email</option>
+                                <option value={"BsFillTelephoneFill"}>Phone</option>
                             </select>
                         </div>
 
 
-                        <button type="submit" className="btn btn-primary" >Add</button>
+                        <button type="submit" className="btn btn-primary" >Add Field</button>
                     </form>
                 </div>
 

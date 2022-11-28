@@ -14,7 +14,7 @@ function FormDetail({form}) {
     // }, [])
     
     return (
-        <table class="table mt-5 border">
+        <table className="table mt-5 border">
             {console.log(form && form)}
             <thead>
                 <tr>
